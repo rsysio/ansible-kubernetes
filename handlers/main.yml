@@ -1,2 +1,15 @@
 ---
 # handlers file for kube
+
+  - name: docker restart
+    service: name=docker state=restarted
+    become: true
+
+  - name: docker stop
+    service: name=docker state=stopped
+    become: true
+
+  - name: docker start
+    service: name=docker state=started
+    become: true
+
