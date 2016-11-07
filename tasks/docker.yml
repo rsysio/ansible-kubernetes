@@ -20,6 +20,6 @@
     become: true
 
   - name: add user
-    user: name={{ user }} groups=docker append=yes
+    user: name={{ remote_user }} groups=docker append=yes
     become: true
 
