@@ -1,5 +1,10 @@
 ---
 # tasks file for kube
 
+  - name: install etcd
+    include: etcd.yml
+    when: etcd is true
+
   - name: install docker
     include: docker.yml
+
