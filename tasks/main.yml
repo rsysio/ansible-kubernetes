@@ -3,7 +3,7 @@
 
   - name: install etcd
     include: etcd.yml
-    when: etcd
+    when: etcd|default(false)|bool == true
 
   - name: install docker
     include: docker.yml
