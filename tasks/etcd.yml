@@ -6,3 +6,11 @@
     become: true
     tags:
         - etcd
+
+  - name: etcd config
+    file: src=etcd.env dest=/etc/default/etcd
+    notify: etcd restart
+    become: true
+    tags:
+        - etcd
+

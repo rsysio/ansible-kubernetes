@@ -13,3 +13,7 @@
     service: name=docker state=started
     become: true
 
+  - name: etcd restart
+    service: name=etcd state=restarted
+    become: true
+
