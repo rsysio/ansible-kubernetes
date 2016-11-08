@@ -8,9 +8,8 @@
 
   - name: flannel systemd conf
     copy: src=flannel.service dest=/etc/systemd/system/flannel.service
+    notify: systemd daemon reload
     become: true
-
-  - notify: systemd daemon reload
 
   - meta: flush_handlers
 
