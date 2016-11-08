@@ -15,7 +15,7 @@
       - linux-image-extra-virtual
     become: true
 
-  - name: install engine
+  - name: install docker engine
     apt: name=docker-engine state=installed update_cache=yes install_recommends=no
     become: true
 
