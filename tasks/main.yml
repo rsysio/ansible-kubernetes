@@ -8,3 +8,5 @@
   - name: install docker
     include: docker.yml
 
+  - name: install flannel
+    include: flannel.yml
