@@ -1,0 +1,12 @@
+[Unit]
+Description=Flannel network fabric for Docker
+After=network.target
+
+[Service]
+EnvironmentFile=/etc/environment
+ExecStart=/opt/bin/flannel
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

@@ -17,3 +17,6 @@
     service: name=etcd state=restarted
     become: true
 
+  - name: systemd daemon reload
+    command: systemctl daemon-reload
+    become: true

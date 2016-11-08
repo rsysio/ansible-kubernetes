@@ -1,0 +1,22 @@
+---
+
+  - name: download flannel
+    get_url: "url={{ flannel_bin_url }} dest=/tmp/flannel.tar.gz"
+
+  - name: unarchive
+    unarchive: src=/tmp/flannel.tar.gz dest=/tmp/flannel
+
+  - name: flannel systemd conf
+    copy: src=flannel.service dest=/etc/systemd/system/flannel.service
+    become: true
+
+  - notify: systemd daemon reload
+
+  - meta: flush_handlers
+
+  - name: enable flannel service
+    service: name=flannel state=enabled
+    become: true
+
+
+
