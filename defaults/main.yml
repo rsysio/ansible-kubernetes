@@ -7,4 +7,5 @@ docker_repo_key: "58118E89F3A912897C070ADBF76221572C52609D"
 kubernetes_version: 1.4.5
 kubernetes_bin_url: "https://github.com/kubernetes/kubernetes/releases/download/v{{ kubernetes_version }}/kubernetes.tar.gz"
 
-
+flannel_version: 0.6.2
+flannel_bin_url: "https://github.com/coreos/flannel/releases/download/v0.6.2/flannel-v{{ flannel_version }}-linux-amd64.tar.gz"
