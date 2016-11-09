@@ -7,6 +7,8 @@
 
   - name: install docker
     include: docker.yml
+    when: docker|default(false)|bool == true
 
   - name: install flannel
     include: flannel.yml
+    when: docker|default(false)|bool == true
