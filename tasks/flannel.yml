@@ -28,16 +28,14 @@
   - file: path=/tmp/flannel state=absent
     when: not flannel_bin.stat.exists
 
+  - name: flanneld env file
+    template: src=flannel.env.j2 dest=/etc/default/flanneld
+    notify: flanneld restart
+    become: true
+
   - name: flannel systemd conf
-    copy: src=flannel.service dest=/etc/systemd/system/flannel.service
+    copy: src=flanneld.service dest=/etc/systemd/system/flanneld.service
     notify: systemd daemon reload
     become: true
-
-  - meta: flush_handlers
-
-  - name: enable flannel service
-    service: name=flannel state=started
-    become: true
-
 
 
