@@ -3,6 +3,9 @@
   - name: download flannel
     get_url: "url={{ flannel_bin_url }} dest=/tmp/flannel.tar.gz"
 
+  - name: create flannel temp dir
+    file: path=/tmp/flannel state=directory
+
   - name: unarchive
     unarchive: src=/tmp/flannel.tar.gz dest=/tmp/flannel remote_src=yes
 
