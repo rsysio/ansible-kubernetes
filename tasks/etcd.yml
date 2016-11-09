@@ -14,6 +14,10 @@
     tags:
         - etcd
 
+  - name: etcd conf dir
+    file: path=/etc/etcd state=directory
+    become: true
+
   - name: flannel conf file
     template: src=flannel-config.json.j2 dest=/etc/etcd/flannel-config.json
     become: true
