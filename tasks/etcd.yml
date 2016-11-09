@@ -25,4 +25,4 @@
   - meta: flush_handlers
 
   - name: load flannel conf
-    shell: "etcdctl set {{ flannel_etcd_key }} < flannel-config.json"
+    shell: "etcdctl set {{ flannel_etcd_key }} < /etc/etcd/flannel-config.json"
