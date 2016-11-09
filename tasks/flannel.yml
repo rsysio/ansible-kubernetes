@@ -1,7 +1,7 @@
 ---
 
   - name: stat flannel
-    stat: path=/usr/bin/flannel
+    stat: path=/usr/bin/flanneld
     register: flannel_bin
 
   - name: download flannel
