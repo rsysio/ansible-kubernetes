@@ -4,7 +4,7 @@
     get_url: "url={{ flannel_bin_url }} dest=/tmp/flannel.tar.gz"
 
   - name: unarchive
-    unarchive: src=/tmp/flannel.tar.gz dest=/tmp/flannel
+    unarchive: src=/tmp/flannel.tar.gz dest=/tmp/flannel remote_src=yes
 
   - name: flannel systemd conf
     copy: src=flannel.service dest=/etc/systemd/system/flannel.service
