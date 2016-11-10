@@ -9,6 +9,6 @@
     include: docker.yml
     when: docker|default(false)|bool == true
 
-  - name: install flannel
-    include: flannel.yml
+  - name: install flanneld
+    include: flanneld.yml
     when: docker|default(false)|bool == true
