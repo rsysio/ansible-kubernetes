@@ -13,4 +13,4 @@ kubernetes_bin_url: "https://github.com/kubernetes/kubernetes/releases/download/
 flannel_version: 0.6.2
 flannel_bin_url: "https://github.com/coreos/flannel/releases/download/v0.6.2/flannel-v{{ flannel_version }}-linux-amd64.tar.gz"
 flannel_network: "10.20.0.0/16"
-flannel_etcd_key: "/kubernetes/network/config"
+flannel_etcd_key: "/kubernetes/network"
