@@ -36,12 +36,7 @@
   - file: path=/tmp/etcd state=absent
 
   - name: etcd config
-    copy: src=etcd.env dest=/etc/default/etcd
-    notify: etcd restart
-    become: true
-
-  - name: etcdd env file
-    template: src=etcd.env.j2 dest=/etc/default/etcd
+    copy: src=etcd/etcd.env dest=/etc/default/etcd
     notify: etcd restart
     become: true
 
