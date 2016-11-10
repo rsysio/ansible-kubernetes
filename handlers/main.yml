@@ -15,6 +15,7 @@
 
   - name: etcd restart
     service: name=etcd state=restarted enabled=yes
+    when: etcd|default(false)|bool == true
     become: true
 
   - name: flanneld restart
