@@ -2,25 +2,25 @@
 # handlers file for kube
 
   - name: docker restart
-    service: name=docker state=restarted
+    service: name=docker state=restarted enabled=yes
     become: true
 
   - name: docker stop
-    service: name=docker state=stopped
+    service: name=docker state=stopped enabled=yes
     become: true
 
   - name: docker start
-    service: name=docker state=started
+    service: name=docker state=started enabled=yes
     become: true
 
   - name: etcd restart
-    service: name=etcd state=restarted
+    service: name=etcd state=restarted enabled=yes
     become: true
 
   - name: flanneld restart
-    service: name=flanneld state=restarted
+    service: name=flanneld state=restarted enabled=yes
     become: true
 
-  - name: systemd daemon reload
+  - name: systemd reload
     command: systemctl daemon-reload
     become: true

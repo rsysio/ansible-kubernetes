@@ -1,28 +1,55 @@
 ---
 # install and configure etcd
 
-  - name: install etcd
-    apt: name=etcd state=installed update_cache=yes install_recommends=no
-    become: true
-    tags:
-        - etcd
-
-  - name: etcd config
-    copy: src=etcd.env dest=/etc/default/etcd
-    notify: etcd restart
-    become: true
-    tags:
-        - etcd
+  - name: stat etcd
+    stat: path=/usr/bin/etcd
+    register: etcd_bin
 
   - name: etcd conf dir
     file: path=/etc/etcd state=directory
     become: true
 
-  - name: flannel conf file
-    template: src=flannel-config.json.j2 dest=/etc/etcd/flannel-config.json
+  - name: download etcd
+    get_url: "url={{ etcd_bin_url }} dest=/tmp/etcd.tar.gz"
+    when: not etcd_bin.stat.exists
+
+  - name: create etcd temp dir
+    file: path=/tmp/etcd state=directory
+    when: not etcd_bin.stat.exists
+
+  - name: unarchive
+    unarchive: src=/tmp/etcd.tar.gz dest=/tmp/etcd remote_src=yes
+    when: not etcd_bin.stat.exists
+
+  - name: copy etcd bins
+    copy: src=/tmp/etcd/etcd dest=/usr/bin/etcd remote_src=yes mode=0755
+    when: not etcd_bin.stat.exists
     become: true
 
-  - meta: flush_handlers
+  - name: copy etcd bins
+    copy: src=/tmp/etcd/etcdctl dest=/usr/bin/etcdctl remote_src=yes mode=0755
+    when: not etcd_bin.stat.exists
+    become: true
 
-  - name: load flannel conf
-    shell: "etcdctl set {{ flannel_etcd_key }} < /etc/etcd/flannel-config.json"
+  - name: cleanup etcd install
+    file: path=/tmp/etcd.tar.gz state=absent
+  - file: path=/tmp/etcd state=absent
+
+  - name: etcd config
+    copy: src=etcd.env dest=/etc/default/etcd
+    notify: etcd restart
+    become: true
+
+  - name: etcdd env file
+    template: src=etcd.env.j2 dest=/etc/default/etcd
+    notify: etcd restart
+    become: true
+
+  - name: etcd systemd conf
+    copy: src=etcd.service dest=/etc/systemd/system/etcd.service mode=644
+    become: true
+    notify:
+        - systemd reload
+        - etcd restart
+
+

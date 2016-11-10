@@ -4,11 +4,13 @@
 docker_repo_key_server: "hkp://p80.pool.sks-keyservers.net:80"
 docker_repo_key: "58118E89F3A912897C070ADBF76221572C52609D"
 
+etcd_version: 3.0.14
+etcd_bin_url: "https://github.com/coreos/etcd/releases/download/v{{ etcd_version }}/etcd-v{{ etcd_version }}-linux-amd64.tar.gz"
+
 kubernetes_version: 1.4.5
 kubernetes_bin_url: "https://github.com/kubernetes/kubernetes/releases/download/v{{ kubernetes_version }}/kubernetes.tar.gz"
 
 flannel_version: 0.6.2
 flannel_bin_url: "https://github.com/coreos/flannel/releases/download/v0.6.2/flannel-v{{ flannel_version }}-linux-amd64.tar.gz"
 flannel_network: "10.20.0.0/16"
-flannel_etcd_host: master0.rsys.io
 flannel_etcd_key: "/kubernetes/network/config"

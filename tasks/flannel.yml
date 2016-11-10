@@ -16,26 +16,33 @@
     unarchive: src=/tmp/flannel.tar.gz dest=/tmp/flannel remote_src=yes
     when: not flannel_bin.stat.exists
 
-  - name: copy flannel_bin
+  - name: copy flannel bins
     copy: src=/tmp/flannel/flanneld dest=/usr/bin/flanneld remote_src=yes mode=0755
     when: not flannel_bin.stat.exists
     become: true
 
   - name: cleanup flannel install
     file: path=/tmp/flannel.tar.gz state=absent
-    when: not flannel_bin.stat.exists
-
   - file: path=/tmp/flannel state=absent
-    when: not flannel_bin.stat.exists
+
+  - name: create flanneld conf dir
+    file: path=/etc/flanneld state=directory
+    become: true
+
+  - name: copy flannel network config
+    template: src=flannel/flannel-config.json.j2 dest=/etc/flanneld/flannel-config.json
+    become: true
 
   - name: flanneld env file
-    template: src=flannel.env.j2 dest=/etc/default/flanneld
+    template: src=flannel/flannel.env.j2 dest=/etc/default/flanneld
     notify: flanneld restart
     become: true
 
   - name: flannel systemd conf
-    copy: src=flanneld.service dest=/etc/systemd/system/flanneld.service
-    notify: systemd daemon reload
+    copy: src=flannel/flanneld.service dest=/etc/systemd/system/flanneld.service mode=644
     become: true
+    notify:
+        - systemd reload
+        - etcd restart
 
 

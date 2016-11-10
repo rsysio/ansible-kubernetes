@@ -5,7 +5,7 @@
     become: true
 
   - name: apt sources
-    template: src=docker.list.j2 dest=/etc/apt/sources.list.d/docker.list
+    template: src=docker/docker.list.j2 dest=/etc/apt/sources.list.d/docker.list
     become: true
 
   - name: kernel extras
