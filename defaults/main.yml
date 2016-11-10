@@ -6,11 +6,18 @@ docker_repo_key: "58118E89F3A912897C070ADBF76221572C52609D"
 
 etcd_version: 3.0.14
 etcd_bin_url: "https://github.com/coreos/etcd/releases/download/v{{ etcd_version }}/etcd-v{{ etcd_version }}-linux-amd64.tar.gz"
+etcd_temp_dir: /tmp/etcd
+etcd_conf_dir: /etc/etcd
+etcd_env_file: /etc/default/etcd
 
 kubernetes_version: 1.4.5
 kubernetes_bin_url: "https://github.com/kubernetes/kubernetes/releases/download/v{{ kubernetes_version }}/kubernetes.tar.gz"
+kubernetes_temp_dir: /tmp/kubernetes
 
 flanneld_version: 0.6.2
 flanneld_bin_url: "https://github.com/coreos/flannel/releases/download/v0.6.2/flannel-v{{ flanneld_version }}-linux-amd64.tar.gz"
 flanneld_network: "10.20.0.0/16"
 flanneld_etcd_key: "/kubernetes/network"
+flanneld_temp_dir: /tmp/flanneld
+flanneld_conf_dir: /etc/flanneld
+flanneld_env_file: /etc/default/flanneld

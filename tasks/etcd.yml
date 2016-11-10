@@ -5,38 +5,37 @@
     stat: path=/usr/bin/etcd
     register: etcd_bin
 
-  - name: etcd conf dir
-    file: path=/etc/etcd state=directory
-    become: true
-
-  - name: download etcd
-    get_url: "url={{ etcd_bin_url }} dest=/tmp/etcd.tar.gz"
+  - name: create etcd temp dir
+    file: "path={{ etcd_temp_dir }} state=directory"
     when: not etcd_bin.stat.exists
 
-  - name: create etcd temp dir
-    file: path=/tmp/etcd state=directory
+  - name: download etcd
+    get_url: "url={{ etcd_bin_url }} dest={{ etcd_temp_dir }}/etcd.tar.gz"
     when: not etcd_bin.stat.exists
 
   - name: unarchive
-    unarchive: src=/tmp/etcd.tar.gz dest=/tmp/etcd remote_src=yes
+    unarchive: "src={{ etcd_temp_dir }}/etcd.tar.gz dest={{ etcd_temp_dir }} remote_src=yes"
     when: not etcd_bin.stat.exists
 
   - name: copy etcd bins
-    copy: src=/tmp/etcd/etcd-v{{ etcd_version }}-linux-amd64/etcd dest=/usr/bin/etcd remote_src=yes mode=0755
+    copy: "src={{ etcd_temp_dir }}/etcd-v{{ etcd_version }}-linux-amd64/etcd dest=/usr/bin/etcd remote_src=yes mode=0755"
     when: not etcd_bin.stat.exists
     become: true
 
   - name: copy etcd bins
-    copy: src="/tmp/etcd/etcd-v{{ etcd_version }}-linux-amd64/etcdctl" dest=/usr/bin/etcdctl remote_src=yes mode=0755
+    copy: "src={{ etcd_temp_dir }}/etcd-v{{ etcd_version }}-linux-amd64/etcdctl dest=/usr/bin/etcdctl remote_src=yes mode=0755"
     when: not etcd_bin.stat.exists
     become: true
 
   - name: cleanup etcd install
-    file: path=/tmp/etcd.tar.gz state=absent
-  - file: path=/tmp/etcd state=absent
+    file: "path={{ etcd_temp_dir }} state=absent"
+
+  - name: etcd conf dir
+    file: "path={{ etcd_conf_dir }} state=directory"
+    become: true
 
   - name: etcd config
-    copy: src=etcd/etcd.env dest=/etc/default/etcd
+    copy: "src=etcd/etcd.env dest={{ etcd_env_file }}"
     notify: etcd restart
     become: true
 
