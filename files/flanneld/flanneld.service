@@ -8,7 +8,7 @@ Before=docker.service
 [Service]
 Type=notify
 EnvironmentFile=/etc/default/flanneld
-ExecStart=/usr/bin/flanneld -etcd-endpoints=${FLANNEL_ETCD} -etcd-prefix=${FLANNEL_ETCD_KEY} $FLANNEL_OPTIONS
+ExecStart=/usr/bin/flanneld
 Restart=on-failure
 RestartSec=5
 
