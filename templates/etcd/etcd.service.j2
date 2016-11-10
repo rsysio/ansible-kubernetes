@@ -8,12 +8,13 @@ Wants=network-online.target
 [Service]
 Environment=DAEMON_ARGS=
 Environment=ETCD_NAME=%H
-Environment=ETCD_DATA_DIR=/var/lib/etcd/default
+Environment=ETCD_DATA_DIR={{ etcd_data_dir }}/default
 EnvironmentFile=-/etc/default/%p
 Type=notify
-User=etcd
+User={{ etcd_user }}
 PermissionsStartOnly=true
 ExecStart=/usr/bin/etcd $DAEMON_ARGS
+ExecStartPost=/usr/bin/etcdctl set {{ flanneld_etcd_key }}/config < {{ etcd_conf_dir }}/flannel-config.json
 Restart=on-abnormal
 #RestartSec=10s
 LimitNOFILE=65536

@@ -52,7 +52,7 @@
     become: true
 
   - name: etcd systemd conf
-    copy: src=etcd/etcd.service dest=/etc/systemd/system/etcd.service mode=644
+    template: src=etcd/etcd.service.j2 dest=/etc/systemd/system/etcd.service mode=644
     become: true
     notify:
         - systemd reload

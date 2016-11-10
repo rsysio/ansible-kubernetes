@@ -20,7 +20,7 @@ kubernetes_temp_dir: /tmp/kubernetes
 flanneld_version: 0.6.2
 flanneld_bin_url: "https://github.com/coreos/flannel/releases/download/v0.6.2/flannel-v{{ flanneld_version }}-linux-amd64.tar.gz"
 flanneld_network: "10.20.0.0/16"
-flanneld_etcd_key: "/kubernetes/network"
+flanneld_etcd_key: /kubernetes/network
 flanneld_temp_dir: /tmp/flanneld
 flanneld_conf_dir: /etc/flanneld
 flanneld_env_file: /etc/default/flanneld
