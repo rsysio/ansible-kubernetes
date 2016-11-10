@@ -31,10 +31,12 @@
     file: "path={{ etcd_temp_dir }} state=absent"
 
   - name: create etcd group
-    group: name=etcd state=present gid=2379
+    group: "name={{ etcd_user }} state=present gid={{ etcd_pid }}"
+    become: true
 
   - name: create etcd user
-    user: name=etcd comment="etcd service user" uid=2379 group=etcd
+    user: "name={{ etcd_user }} comment='etcd service user' uid={{ etcd_pid }} group={{ etcd_user }}"
+    become: true
 
   - name: etcd conf dir
     file: "path={{ etcd_conf_dir }} state=directory"

@@ -9,6 +9,8 @@ etcd_bin_url: "https://github.com/coreos/etcd/releases/download/v{{ etcd_version
 etcd_temp_dir: /tmp/etcd
 etcd_conf_dir: /etc/etcd
 etcd_env_file: /etc/default/etcd
+etcd_user: etcd
+etcd_pid: 2379
 
 kubernetes_version: 1.4.5
 kubernetes_bin_url: "https://github.com/kubernetes/kubernetes/releases/download/v{{ kubernetes_version }}/kubernetes.tar.gz"
