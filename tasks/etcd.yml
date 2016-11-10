@@ -35,7 +35,7 @@
     become: true
 
   - name: create etcd user
-    user: "name={{ etcd_user }} comment='etcd service user' uid={{ etcd_pid }} group={{ etcd_user }}"
+    user: "name={{ etcd_user }} comment='etcd service user' uid={{ etcd_pid }} group={{ etcd_user }} createhome=no"
     become: true
 
   - name: etcd conf dir
