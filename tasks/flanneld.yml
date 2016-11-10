@@ -42,6 +42,6 @@
     become: true
     notify:
         - systemd reload
-        - etcd restart
+        - flanneld restart
 
 
