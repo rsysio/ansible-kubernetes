@@ -9,20 +9,20 @@
     when: not flanneld_bin.stat.exists
 
   - name: download flanneld
-    get_url: "url={{ flanneld_bin_url }} dest={{ flanneld _temp_dir }}/flanneld.tar.gz"
+    get_url: "url={{ flanneld_bin_url }} dest={{ flanneld_temp_dir }}/flanneld.tar.gz"
     when: not flanneld_bin.stat.exists
 
   - name: unarchive
-    unarchive: "src={{ flanneld _temp_dir }}/flanneld.tar.gz dest={{ flanneld _temp_dir }} remote_src=yes"
+    unarchive: "src={{ flanneld_temp_dir }}/flanneld.tar.gz dest={{ flanneld_temp_dir }} remote_src=yes"
     when: not flanneld_bin.stat.exists
 
   - name: copy flanneld bins
-    copy: "src={{ flanneld _temp_dir }}/flanneld dest=/usr/bin/flanneld remote_src=yes mode=0755"
+    copy: "src={{ flanneld_temp_dir }}/flanneld dest=/usr/bin/flanneld remote_src=yes mode=0755"
     when: not flanneld_bin.stat.exists
     become: true
 
   - name: cleanup flanneld install
-    file: "path={{ flanneld _temp_dir }} state=absent"
+    file: "path={{ flanneld_temp_dir }} state=absent"
 
   - name: create flanneld conf dir
     file: "path={{ flanneld_conf_dir }} state=directory"
