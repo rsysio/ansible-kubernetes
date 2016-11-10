@@ -42,6 +42,10 @@
     file: "path={{ etcd_conf_dir }} state=directory"
     become: true
 
+  - name: create etcd data dir
+    file: "path={{ etcd_data_dir }} state=directory owner={{ etcd_user }} group={{ etcd_user }}"
+    become: true
+
   - name: etcd config
     copy: "src=etcd/etcd.env dest={{ etcd_env_file }}"
     notify: etcd restart
