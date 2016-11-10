@@ -5,7 +5,7 @@
     register: flanneld_bin
 
   - name: download flanneld
-    get_url: "url={{ flanneld_bin_url }}" dest=/tmp/flanneld.tar.gz
+    get_url: "url={{ flanneld_bin_url }} dest=/tmp/flanneld.tar.gz"
     when: not flanneld_bin.stat.exists
 
   - name: create flanneld temp dir
