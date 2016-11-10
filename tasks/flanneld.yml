@@ -5,7 +5,7 @@
     register: flanneld_bin
 
   - name: create flanneld temp dir
-    file: "path={{ flanneld _temp_dir }} state=directory"
+    file: "path={{ flanneld_temp_dir }} state=directory"
     when: not flanneld_bin.stat.exists
 
   - name: download flanneld
