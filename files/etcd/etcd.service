@@ -11,9 +11,8 @@ Environment=ETCD_NAME=%H
 Environment=ETCD_DATA_DIR=/var/lib/etcd/default
 EnvironmentFile=-/etc/default/%p
 Type=notify
-#User=etcd
+User=etcd
 PermissionsStartOnly=true
-#ExecStart=/bin/sh -c "GOMAXPROCS=$(nproc) /usr/bin/etcd $DAEMON_ARGS"
 ExecStart=/usr/bin/etcd $DAEMON_ARGS
 Restart=on-abnormal
 #RestartSec=10s

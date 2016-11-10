@@ -30,6 +30,12 @@
   - name: cleanup etcd install
     file: "path={{ etcd_temp_dir }} state=absent"
 
+  - name: create etcd group
+    group: name=etcd state=present gid=2379
+
+  - name: create etcd user
+    user: name=etcd comment="etcd service user" uid=2379 group=etcd
+
   - name: etcd conf dir
     file: "path={{ etcd_conf_dir }} state=directory"
     become: true
