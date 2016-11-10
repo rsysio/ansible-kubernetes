@@ -22,12 +22,12 @@
     when: not etcd_bin.stat.exists
 
   - name: copy etcd bins
-    copy: src=/tmp/etcd/etcd dest=/usr/bin/etcd remote_src=yes mode=0755
+    copy: src=/tmp/etcd/etcd-{{ etcd_version }}-linux-amd64/etcd dest=/usr/bin/etcd remote_src=yes mode=0755
     when: not etcd_bin.stat.exists
     become: true
 
   - name: copy etcd bins
-    copy: src=/tmp/etcd/etcdctl dest=/usr/bin/etcdctl remote_src=yes mode=0755
+    copy: src="/tmp/etcd/etcd-{{ etcd_version }}-linux-amd64/etcdctl" dest=/usr/bin/etcdctl remote_src=yes mode=0755
     when: not etcd_bin.stat.exists
     become: true
 
