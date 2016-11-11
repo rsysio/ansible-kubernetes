@@ -1,7 +1,7 @@
 ---
 
   - name: create kubernetes install dir
-    local_action: "file path={{ kubernetes_temp_dir }} state=directory"
+    local_action: file path={{ kubernetes_temp_dir }} state=directory
 
   - name: download kubernetes
-    local_action: "get_url url={{ kubernetes_bin_url }} dest={{ kubernetes_temp_dir }}/kubernetes.tar.gz"
+    local_action: get_url url={{ kubernetes_bin_url }} dest={{ kubernetes_temp_dir }}/kubernetes.tar.gz
