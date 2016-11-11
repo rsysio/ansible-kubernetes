@@ -1,0 +1,4 @@
+---
+
+  - name: download kubernetes
+    local_action: get_url url={{ kubernetes_bin_url }} dest=kubernetes.tar.gz
