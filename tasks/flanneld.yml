@@ -44,3 +44,11 @@
     service: name=flanneld state=started enabled=yes
     become: true
 
+  - meta: flush_handlers
+
+  - name: conf docker with flanneld
+    copy: src=docker/docker.service dest=/lib/systemd/system/docker.service mode=644
+    become: true
+    notify:
+        - systemd reload
+        - docker restart

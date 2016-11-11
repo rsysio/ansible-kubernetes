@@ -5,6 +5,15 @@
     command: systemctl daemon-reload
     become: true
 
+  - name: etcd restart
+    service: name=etcd state=restarted enabled=yes
+    when: etcd|default(false)|bool == true
+    become: true
+
+  - name: flanneld restart
+    service: name=flanneld state=restarted enabled=yes
+    become: true
+
   - name: docker restart
     service: name=docker state=restarted enabled=yes
     become: true
@@ -15,15 +24,6 @@
 
   - name: docker start
     service: name=docker state=started enabled=yes
-    become: true
-
-  - name: etcd restart
-    service: name=etcd state=restarted enabled=yes
-    when: etcd|default(false)|bool == true
-    become: true
-
-  - name: flanneld restart
-    service: name=flanneld state=restarted enabled=yes
     become: true
 
 
