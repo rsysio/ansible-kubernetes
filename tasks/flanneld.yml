@@ -40,4 +40,5 @@
         - systemd reload
         - flanneld restart
 
+  - service: name=flanneld state=started enabled=yes
 
