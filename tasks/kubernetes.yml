@@ -10,4 +10,4 @@
     local_action: "unarchive src={{ kubernetes_temp_dir }}/kubernetes.tar.gz dest={{ kubernetes_temp_dir }}/"
 
   - name: untar kubernetes binaries
-    local_action: "unarchive src={{ kubernetes_temp_dir }}/kubernetes/server/kubernetes-server-linux-amd64.tar.gz dest={{ kubernetes_temp_dir }}/"
+    local_action: "unarchive src={{ kubernetes_temp_dir }}/kubernetes/server/kubernetes-server-linux-amd64.tar.gz dest={{ kubernetes_temp_dir }}/bin/"
