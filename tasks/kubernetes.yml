@@ -5,3 +5,6 @@
 
   - name: download kubernetes
     local_action: "get_url url={{ kubernetes_bin_url }} dest={{ kubernetes_temp_dir }}/kubernetes.tar.gz"
+
+  - name: untar kubernetes archive
+    local_action: "unarchive src={{ kubernetes_temp_dir }}/kubernetes.tar.gz dest={{ kubernetes_temp_dir }}/
