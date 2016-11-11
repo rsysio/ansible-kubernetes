@@ -11,7 +11,7 @@
 
   - name: install flanneld
     include: flanneld.yml
-    when: docker|default(false)|bool == true
+    when: flanneld|default(false)|bool == true
 
   - name: install kubernetes
     include: kubernetes.yml
