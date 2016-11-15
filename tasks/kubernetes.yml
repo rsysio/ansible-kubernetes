@@ -18,24 +18,30 @@
   - name: copy kubectl
     copy: "src={{ kubernetes_temp_dir }}/bin/kubernetes/server/bin/kubectl dest=/usr/bin/kubectl mode=755"
     when: kube_master|default(false)|bool == true
+    become: true
 
   - name: copy kube-apiserver
     copy: "src={{ kubernetes_temp_dir }}/bin/kubernetes/server/bin/kube-apiserver dest=/usr/bin/kube-apiserver mode=755"
     when: kube_master|default(false)|bool == true
+    become: true
 
   - name: copy kube-scheduler
     copy: "src={{ kubernetes_temp_dir }}/bin/kubernetes/server/bin/kube-scheduler dest=/usr/bin/kube-scheduler mode=755"
     when: kube_master|default(false)|bool == true
+    become: true
 
   - name: copy kube-controller-manager
     copy: "src={{ kubernetes_temp_dir }}/bin/kubernetes/server/bin/kube-controller-manager dest=/usr/bin/kube-controller-manager mode=755"
     when: kube_master|default(false)|bool == true
+    become: true
 
   - name: copy kubelet
     copy: "src={{ kubernetes_temp_dir }}/bin/kubernetes/server/bin/kubelet dest=/usr/bin/kubelet mode=755"
     when: kubelet|default(false)|bool == true
+    become: true
 
   - name: copy kube-proxy
     copy: "src={{ kubernetes_temp_dir }}/bin/kubernetes/server/bin/kube-proxy dest=/usr/bin/kube-proxy mode=755"
     when: kubelet|default(false)|bool == true
+    become: true
 
