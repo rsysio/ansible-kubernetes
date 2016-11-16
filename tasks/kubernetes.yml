@@ -15,6 +15,14 @@
   - name: untar kubernetes binaries
     local_action: "unarchive src={{ kubernetes_temp_dir }}/kubernetes/server/kubernetes-server-linux-amd64.tar.gz dest={{ kubernetes_temp_dir }}/bin/ creates={{ kubernetes_temp_dir }}/bin/kubernetes"
 
+  - name: create kube group
+    group: "name={{ kube_user }} state=present gid={{ kube_pid }}"
+    become: true
+
+  - name: create kube user
+    user: "name={{ kube_user }} comment='kube service user' uid={{ kube_pid }} group={{ kube_user }} createhome=no"
+    become: true
+
   - name: copy kubectl
     copy: "src={{ kubernetes_temp_dir }}/bin/kubernetes/server/bin/kubectl dest=/usr/bin/kubectl mode=755"
     when: kube_master|default(false)|bool == true
