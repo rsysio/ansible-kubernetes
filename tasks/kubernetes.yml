@@ -126,6 +126,10 @@
     #
     ####################
 
+  - name: create kubelet data dir
+    file: "path={{ kubelet_data_dir }} state=directory owner={{ kube_user }} group={{ kube_user }}"
+    become: true
+
   - name: copy kubelet
     copy: "src={{ kubernetes_temp_dir }}/bin/kubernetes/server/bin/kubelet dest=/usr/bin/kubelet mode=755"
     when: kubelet|default(false)|bool == true
