@@ -20,28 +20,148 @@
     when: kube_master|default(false)|bool == true
     become: true
 
+  - name: kubernetes conf dir
+    file: path=/etc/kubernetes state=directory
+    become: true
+
+  - name: kube config
+    template: src=templates/kubernetes/env/config.j2 dest=/etc/kubernetes/config
+    become: true
+    notify:
+      - kube-apiserver restart
+      - kube-scheduler restart
+      - kube-controller-manager restart
+      - kubelet restart
+      - kube-proxy restart
+
+    ####################
+    #
+    # api server
+    #
+    ####################
+
   - name: copy kube-apiserver
     copy: "src={{ kubernetes_temp_dir }}/bin/kubernetes/server/bin/kube-apiserver dest=/usr/bin/kube-apiserver mode=755"
     when: kube_master|default(false)|bool == true
     become: true
+
+  - name: kube-apiserver env file
+    template: src=templates/kubernetes/env/apiserver.j2 dest=/etc/kubernetes/apiserver
+    when: kube_master|default(false)|bool == true
+    become: true
+    notify:
+      - kube-apiserver restart
+
+  - name: kube-apiserver service
+    copy: src=kubernetes/systemd/kube-apiserver.service dest=/etc/systemd/system/kube-apiserver.service
+    when: kube_master|default(false)|bool == true
+    become: true
+    notify:
+      - systemd reload
+      - kube-apiserver restart
+
+    ####################
+    #
+    # scheduler
+    #
+    ####################
 
   - name: copy kube-scheduler
     copy: "src={{ kubernetes_temp_dir }}/bin/kubernetes/server/bin/kube-scheduler dest=/usr/bin/kube-scheduler mode=755"
     when: kube_master|default(false)|bool == true
     become: true
 
+  - name: kube-scheduler env file
+    template: src=templates/kubernetes/env/scheduler.j2 dest=/etc/kubernetes/scheduler
+    when: kube_master|default(false)|bool == true
+    become: true
+    notify:
+      - kube-scheduler restart
+
+  - name: kube-scheduler service
+    copy: src=kubernetes/systemd/kube-scheduler.service dest=/etc/systemd/system/kube-scheduler.service
+    when: kube_master|default(false)|bool == true
+    become: true
+    notify:
+      - systemd reload
+      - kube-scheduler restart
+
+    ####################
+    #
+    # controller manager
+    #
+    ####################
+
   - name: copy kube-controller-manager
     copy: "src={{ kubernetes_temp_dir }}/bin/kubernetes/server/bin/kube-controller-manager dest=/usr/bin/kube-controller-manager mode=755"
     when: kube_master|default(false)|bool == true
     become: true
+
+  - name: kube-controller-manager env file
+    template: src=templates/kubernetes/env/controller-manager.j2 dest=/etc/kubernetes/controller-manager
+    when: kube_master|default(false)|bool == true
+    become: true
+    notify:
+      - kube-controller-manager restart
+
+  - name: kube-controller-manager service
+    copy: src=kubernetes/systemd/kube-controller-manager.service dest=/etc/systemd/system/kube-controller-manager.service
+    when: kube_master|default(false)|bool == true
+    become: true
+    notify:
+      - systemd reload
+      - kube-controller-manager restart
+
+    ####################
+    #
+    # kublet
+    #
+    ####################
 
   - name: copy kubelet
     copy: "src={{ kubernetes_temp_dir }}/bin/kubernetes/server/bin/kubelet dest=/usr/bin/kubelet mode=755"
     when: kubelet|default(false)|bool == true
     become: true
 
+  - name: kubelet env file
+    template: src=templates/kubernetes/env/kubelet.j2 dest=/etc/kubernetes/kubelet
+    when: kubelet|default(false)|bool == true
+    become: true
+    notify:
+      - kubelet restart
+
+  - name: kubelet service
+    copy: src=kubernetes/systemd/kubelet.service dest=/etc/systemd/system/kubelet.service
+    when: kubelet|default(false)|bool == true
+    become: true
+    notify:
+      - systemd reload
+      - kubelet restart
+
+    ####################
+    #
+    # proxy
+    #
+    ####################
+
   - name: copy kube-proxy
     copy: "src={{ kubernetes_temp_dir }}/bin/kubernetes/server/bin/kube-proxy dest=/usr/bin/kube-proxy mode=755"
     when: kubelet|default(false)|bool == true
     become: true
+
+  - name: proxy env file
+    template: src=templates/kubernetes/env/proxy.j2 dest=/etc/kubernetes/proxy
+    when: kubelet|default(false)|bool == true
+    become: true
+    notify:
+      - kube-proxy restart
+
+  - name: kube-proxy service
+    copy: src=kubernetes/systemd/kube-proxy.service dest=/etc/systemd/system/kube-proxy.service
+    when: kubelet|default(false)|bool == true
+    become: true
+    notify:
+      - systemd reload
+      - kube-proxy restart
+
 

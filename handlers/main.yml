@@ -26,4 +26,25 @@
     service: name=docker state=started enabled=yes
     become: true
 
+  - name: kube-apiserver restart
+    service: name=kube-apiserver state=restarted enabled=yes
+    become: true
+
+  - name: kube-scheduler restart
+    service: name=kube-scheduler state=restarted enabled=yes
+    become: true
+
+  - name: kube-controller-manager restart
+    service: name=kube-controller-manager state=restarted enabled=yes
+    become: true
+
+  - name: kubelet restart
+    service: name=kubelet state=restarted enabled=yes
+    become: true
+
+  - name: kube-proxy restart
+    service: name=kube-proxy state=restarted enabled=yes
+    become: true
+
+
 

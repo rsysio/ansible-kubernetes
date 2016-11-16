@@ -3,6 +3,12 @@
 #
 # The following values are used to configure the kube-apiserver
 #
+{% macro etcd_hosts() -%}
+{% set comma = joiner(",") -%}
+{% for host in groups.all -%}
+{%- if hostvars[host]['etcd']|default(false) == true -%}{{ comma() }}http://{{ host }}:2379{%- endif -%}
+{% endfor -%}
+{% endmacro -%}
 
 # The address on the local server to listen to.
 KUBE_API_ADDRESS="--insecure-bind-address=127.0.0.1"
@@ -14,10 +20,10 @@ KUBE_API_ADDRESS="--insecure-bind-address=127.0.0.1"
 # KUBELET_PORT="--kubelet-port=10250"
 
 # Comma separated list of nodes in the etcd cluster
-KUBE_ETCD_SERVERS="--etcd-servers=http://127.0.0.1:4001"
+KUBE_ETCD_SERVERS="--etcd-servers={{ etcd_hosts() }}"
 
 # Address range to use for services
-KUBE_SERVICE_ADDRESSES="--service-cluster-ip-range=10.254.0.0/16"
+KUBE_SERVICE_ADDRESSES="--service-cluster-ip-range={{ flanneld_network }}"
 
 # default admission control policies
 KUBE_ADMISSION_CONTROL="--admission-control=NamespaceLifecycle,LimitRanger,SecurityContextDeny,ServiceAccount,ResourceQuota"
