@@ -17,7 +17,7 @@ KUBELET_ADDRESS="--address=127.0.0.1"
 {% endfor -%}
 {% endmacro -%}
 # location of the api-server
-KUBELET_API_SERVER="--api-servers=http://{{ etcd_hosts() }}"
+KUBELET_API_SERVER="--api-servers={{ etcd_hosts() }}"
 
 # Add your own!
 KUBELET_ARGS=""
