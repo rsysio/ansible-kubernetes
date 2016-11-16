@@ -128,6 +128,7 @@
 
   - name: create kubelet data dir
     file: "path={{ kubelet_data_dir }} state=directory owner={{ kube_user }} group={{ kube_user }}"
+    when: kubelet|default(false)|bool == true
     become: true
 
   - name: copy kubelet
