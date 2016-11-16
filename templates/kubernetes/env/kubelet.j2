@@ -8,7 +8,7 @@ KUBELET_ADDRESS="--address=127.0.0.1"
 # KUBELET_PORT="--port=10250"
 
 # You may leave this blank to use the actual hostname
-KUBELET_HOSTNAME="--hostname-override={{ ansible_fqdn }}"
+KUBELET_HOSTNAME="--hostname-override={{ host }}"
 
 {% macro etcd_hosts() -%}
 {% set comma = joiner(",") -%}
