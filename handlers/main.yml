@@ -12,38 +12,47 @@
 
   - name: flanneld restart
     service: name=flanneld state=restarted enabled=yes
+    when: flanneld|default(false)|bool == true
     become: true
 
   - name: docker restart
     service: name=docker state=restarted enabled=yes
+    when: docker|default(false)|bool == true
     become: true
 
   - name: docker stop
     service: name=docker state=stopped enabled=yes
+    when: docker|default(false)|bool == true
     become: true
 
   - name: docker start
     service: name=docker state=started enabled=yes
+    when: docker|default(false)|bool == true
     become: true
 
   - name: kube-apiserver restart
     service: name=kube-apiserver state=restarted enabled=yes
+    when: kube_apiserver|default(false)|bool == true
     become: true
 
   - name: kube-scheduler restart
     service: name=kube-scheduler state=restarted enabled=yes
+    when: kube_scheduler|default(false)|bool == true
     become: true
 
   - name: kube-controller-manager restart
     service: name=kube-controller-manager state=restarted enabled=yes
+    when: kube_controller_manager|default(false)|bool == true
     become: true
 
   - name: kubelet restart
     service: name=kubelet state=restarted enabled=yes
+    when: kubelet|default(false)|bool == true
     become: true
 
   - name: kube-proxy restart
     service: name=kube-proxy state=restarted enabled=yes
+    when: kube_proxy|default(false)|bool == true
     become: true
 
 
