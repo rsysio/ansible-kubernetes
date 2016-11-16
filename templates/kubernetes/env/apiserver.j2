@@ -26,7 +26,7 @@ KUBE_ETCD_SERVERS="--etcd-servers={{ etcd_hosts() }}"
 KUBE_SERVICE_ADDRESSES="--service-cluster-ip-range={{ flanneld_network }}"
 
 # default admission control policies
-KUBE_ADMISSION_CONTROL="--admission-control=NamespaceLifecycle,LimitRanger,SecurityContextDeny,ServiceAccount,ResourceQuota"
+KUBE_ADMISSION_CONTROL="--admission-control=NamespaceLifecycle,LimitRanger,SecurityContextDeny,ResourceQuota"
 
 # Add your own!
 KUBE_API_ARGS=""
