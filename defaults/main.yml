@@ -17,6 +17,7 @@ kubernetes_version: 1.4.5
 kubernetes_bin_url: "https://github.com/kubernetes/kubernetes/releases/download/v{{ kubernetes_version }}/kubernetes.tar.gz"
 kubernetes_temp_dir: /tmp/kubernetes
 kubelet_data_dir: /var/lib/kubelet
+kubernetes_service_address: "10.30.0.0/16"
 kube_user: kube
 kube_pid: 5858
 

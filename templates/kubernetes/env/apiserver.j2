@@ -23,7 +23,7 @@ KUBE_API_ADDRESS="--insecure-bind-address=0.0.0.0"
 KUBE_ETCD_SERVERS="--etcd-servers={{ etcd_hosts() }}"
 
 # Address range to use for services
-KUBE_SERVICE_ADDRESSES="--service-cluster-ip-range={{ flanneld_network }}"
+KUBE_SERVICE_ADDRESSES="--service-cluster-ip-range={{ kubernetes_service_address }}"
 
 # default admission control policies
 KUBE_ADMISSION_CONTROL="--admission-control=NamespaceLifecycle,LimitRanger,SecurityContextDeny,ResourceQuota"
