@@ -1,0 +1,18 @@
+---
+  - name: copy kube-apiserver
+    copy: "src={{ kubernetes_temp_dir }}/bin/kubernetes/server/bin/kube-apiserver dest=/usr/bin/kube-apiserver mode=755"
+    become: true
+
+  - name: kube-apiserver env file
+    template: src=templates/kubernetes/env/apiserver.j2 dest=/etc/kubernetes/apiserver
+    become: true
+    notify:
+      - kube-apiserver restart
+
+  - name: kube-apiserver service
+    copy: src=kubernetes/systemd/kube-apiserver.service dest=/etc/systemd/system/kube-apiserver.service
+    become: true
+    notify:
+      - systemd reload
+      - kube-apiserver restart
+

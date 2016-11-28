@@ -1,0 +1,7 @@
+---
+
+  - name: copy kubectl
+    copy: "src={{ kubernetes_temp_dir }}/bin/kubernetes/server/bin/kubectl dest=/usr/bin/kubectl mode=755"
+    when: kubectl|default(false)|bool == true
+    become: true
+

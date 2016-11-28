@@ -1,0 +1,27 @@
+---
+
+  - name: create kubelet data dir
+    file: "path={{ kubelet_data_dir }} state=directory owner={{ kube_user }} group={{ kube_user }}"
+    when: kubelet|default(false)|bool == true
+    become: true
+
+  - name: copy kubelet
+    copy: "src={{ kubernetes_temp_dir }}/bin/kubernetes/server/bin/kubelet dest=/usr/bin/kubelet mode=755"
+    when: kubelet|default(false)|bool == true
+    become: true
+
+  - name: kubelet env file
+    template: src=templates/kubernetes/env/kubelet.j2 dest=/etc/kubernetes/kubelet
+    when: kubelet|default(false)|bool == true
+    become: true
+    notify:
+      - kubelet restart
+
+  - name: kubelet service
+    copy: src=kubernetes/systemd/kubelet.service dest=/etc/systemd/system/kubelet.service
+    when: kubelet|default(false)|bool == true
+    become: true
+    notify:
+      - systemd reload
+      - kubelet restart
+

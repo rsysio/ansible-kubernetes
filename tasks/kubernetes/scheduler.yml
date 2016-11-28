@@ -1,0 +1,22 @@
+---
+
+  - name: copy kube-scheduler
+    copy: "src={{ kubernetes_temp_dir }}/bin/kubernetes/server/bin/kube-scheduler dest=/usr/bin/kube-scheduler mode=755"
+    when: kube_master|default(false)|bool == true
+    become: true
+
+  - name: kube-scheduler env file
+    template: src=templates/kubernetes/env/scheduler.j2 dest=/etc/kubernetes/scheduler
+    when: kube_master|default(false)|bool == true
+    become: true
+    notify:
+      - kube-scheduler restart
+
+  - name: kube-scheduler service
+    copy: src=kubernetes/systemd/kube-scheduler.service dest=/etc/systemd/system/kube-scheduler.service
+    when: kube_master|default(false)|bool == true
+    become: true
+    notify:
+      - systemd reload
+      - kube-scheduler restart
+

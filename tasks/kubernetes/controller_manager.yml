@@ -1,0 +1,22 @@
+---
+
+  - name: copy kube-controller-manager
+    copy: "src={{ kubernetes_temp_dir }}/bin/kubernetes/server/bin/kube-controller-manager dest=/usr/bin/kube-controller-manager mode=755"
+    when: kube_master|default(false)|bool == true
+    become: true
+
+  - name: kube-controller-manager env file
+    template: src=templates/kubernetes/env/controller-manager.j2 dest=/etc/kubernetes/controller-manager
+    when: kube_master|default(false)|bool == true
+    become: true
+    notify:
+      - kube-controller-manager restart
+
+  - name: kube-controller-manager service
+    copy: src=kubernetes/systemd/kube-controller-manager.service dest=/etc/systemd/system/kube-controller-manager.service
+    when: kube_master|default(false)|bool == true
+    become: true
+    notify:
+      - systemd reload
+      - kube-controller-manager restart
+

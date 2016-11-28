@@ -1,0 +1,23 @@
+---
+
+  - name: copy kube-proxy
+    copy: "src={{ kubernetes_temp_dir }}/bin/kubernetes/server/bin/kube-proxy dest=/usr/bin/kube-proxy mode=755"
+    when: kube_proxy|default(false)|bool == true
+    become: true
+
+  - name: proxy env file
+    template: src=templates/kubernetes/env/proxy.j2 dest=/etc/kubernetes/proxy
+    when: kube_proxy|default(false)|bool == true
+    become: true
+    notify:
+      - kube-proxy restart
+
+  - name: kube-proxy service
+    copy: src=kubernetes/systemd/kube-proxy.service dest=/etc/systemd/system/kube-proxy.service
+    when: kube_proxy|default(false)|bool == true
+    become: true
+    notify:
+      - systemd reload
+      - kube-proxy restart
+
+

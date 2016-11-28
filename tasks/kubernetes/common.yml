@@ -1,0 +1,24 @@
+---
+
+  - name: create kube group
+    group: "name={{ kube_user }} state=present gid={{ kube_pid }}"
+    become: true
+
+  - name: create kube user
+    user: "name={{ kube_user }} comment='kube service user' uid={{ kube_pid }} group={{ kube_user }} createhome=no"
+    become: true
+
+  - name: kubernetes conf dir
+    file: path=/etc/kubernetes state=directory
+    become: true
+
+  - name: kube config
+    template: src=templates/kubernetes/env/config.j2 dest=/etc/kubernetes/config
+    become: true
+    notify:
+      - kube-apiserver restart
+      - kube-scheduler restart
+      - kube-controller-manager restart
+      - kubelet restart
+      - kube-proxy restart
+

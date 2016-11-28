@@ -13,5 +13,37 @@
     include: flanneld.yml
     when: flanneld|default(false)|bool == true
 
-  - name: install kubernetes
-    include: kubernetes.yml
+  - name: get kubernetes
+    include: kubernetes/get.yml
+
+  - name: install kubernetes common files
+    include: kubernetes/common.yml
+    when: kubernetes|default(false)|bool == true
+
+  - name: install api server
+    include: kubernetes/api.yml
+    when: kube_apiserver|default(false)|bool == true
+
+  - name: install contol manager
+    include: kubernetes/controller_manager.yml
+    when: kube_controller_manager|default(false)|bool == true
+
+  - name: install scheduler
+    include: kubernetes/scheduler.yml
+    when: kube_scheduler|default(false)|bool == true
+
+  - name: install proxy
+    include: kubernetes/proxy.yml
+    when: kube_controller_manager|default(false)|bool == true
+
+  - name: install kubelet
+    include: kubernetes/kubelet.yml
+    when: kubelet|default(false)|bool == true
+
+  - name: install kubectl
+    include: kubernetes/kubectl.yml
+    when: kubectl|default(false)|bool == true
+
+
+
+
