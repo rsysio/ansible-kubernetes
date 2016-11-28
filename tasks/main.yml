@@ -34,7 +34,7 @@
 
   - name: install proxy
     include: kubernetes/proxy.yml
-    when: kube_controller_manager|default(false)|bool == true
+    when: kube_proxy|default(false)|bool == true
 
   - name: install kubelet
     include: kubernetes/kubelet.yml
