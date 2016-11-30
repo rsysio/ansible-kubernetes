@@ -6,29 +6,29 @@
     register: etcd_bin
 
   - name: create etcd temp dir
-    file: "path={{ etcd_temp_dir }} state=directory"
+    local_action: "file path={{ etcd_temp_dir }} state=directory"
+    run_once: true
     when: not etcd_bin.stat.exists
 
   - name: download etcd
-    get_url: "url={{ etcd_bin_url }} dest={{ etcd_temp_dir }}/etcd.tar.gz"
+    local_action: "get_url url={{ etcd_bin_url }} dest={{ etcd_temp_dir }}/etcd.tar.gz"
+    run_once: true
     when: not etcd_bin.stat.exists
 
   - name: unarchive
-    unarchive: "src={{ etcd_temp_dir }}/etcd.tar.gz dest={{ etcd_temp_dir }} remote_src=yes"
+    local_action: "unarchive src={{ etcd_temp_dir }}/etcd.tar.gz dest={{ etcd_temp_dir }}"
+    run_once: true
     when: not etcd_bin.stat.exists
 
   - name: copy etcd bins
-    copy: "src={{ etcd_temp_dir }}/etcd-v{{ etcd_version }}-linux-amd64/etcd dest=/usr/bin/etcd remote_src=yes mode=0755"
+    copy: "src={{ etcd_temp_dir }}/etcd-v{{ etcd_version }}-linux-amd64/etcd dest=/usr/bin/etcd mode=0755"
     when: not etcd_bin.stat.exists
     become: true
 
   - name: copy etcd bins
-    copy: "src={{ etcd_temp_dir }}/etcd-v{{ etcd_version }}-linux-amd64/etcdctl dest=/usr/bin/etcdctl remote_src=yes mode=0755"
+    copy: "src={{ etcd_temp_dir }}/etcd-v{{ etcd_version }}-linux-amd64/etcdctl dest=/usr/bin/etcdctl mode=0755"
     when: not etcd_bin.stat.exists
     become: true
-
-  - name: cleanup etcd install
-    file: "path={{ etcd_temp_dir }} state=absent"
 
   - name: create etcd group
     group: "name={{ etcd_user }} state=present gid={{ etcd_pid }}"
