@@ -10,7 +10,7 @@
     when: not flanneld_bin.stat.exists
 
   - name: download flanneld
-    local_action: "get_url url={{ flanneld_bin_url }} dest={{ flanneld_temp_dir }}/flanneld.tar.gz"
+    local_action: "get_url url={{ flanneld_bin_url }} dest={{ flanneld_temp_dir }}/flanneld.tar.gz force=no"
     run_once: true
     when: not flanneld_bin.stat.exists
 

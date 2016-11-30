@@ -11,7 +11,7 @@
     when: not etcd_bin.stat.exists
 
   - name: download etcd
-    local_action: "get_url url={{ etcd_bin_url }} dest={{ etcd_temp_dir }}/etcd.tar.gz"
+    local_action: "get_url url={{ etcd_bin_url }} dest={{ etcd_temp_dir }}/etcd.tar.gz force=no"
     run_once: true
     when: not etcd_bin.stat.exists
 

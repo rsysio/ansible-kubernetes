@@ -5,7 +5,7 @@
     run_once: true
 
   - name: download kubernetes
-    local_action: "get_url url={{ kubernetes_bin_url }} dest={{ kubernetes_temp_dir }}/kubernetes.tar.gz"
+    local_action: "get_url url={{ kubernetes_bin_url }} dest={{ kubernetes_temp_dir }}/kubernetes.tar.gz force=no"
     run_once: true
 
   - name: untar kubernetes archive
