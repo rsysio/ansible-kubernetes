@@ -4,46 +4,77 @@
   - name: install etcd
     include: etcd.yml
     when: etcd|default(false)|bool == true
+    tags:
+      - kubernetes
+      - etcd
 
   - name: install docker
     include: docker.yml
     when: docker|default(false)|bool == true
+    tags:
+      - kubernetes
+      - docker
 
   - name: install flanneld
     include: flanneld.yml
     when: flanneld|default(false)|bool == true
+    tags:
+      - kubernetes
+      - flanneld
 
   - name: get kubernetes
     include: kubernetes/get.yml
+    tags:
+      - kubernetes
+      - master
 
   - name: install kubernetes common files
     include: kubernetes/common.yml
     when: kubernetes|default(false)|bool == true
+    tags:
+      - kubernetes
+      - master
 
   - name: install api server
     include: kubernetes/api.yml
     when: kube_apiserver|default(false)|bool == true
+    tags:
+      - kubernetes
+      - master
 
   - name: install contol manager
     include: kubernetes/controller_manager.yml
     when: kube_controller_manager|default(false)|bool == true
+    tags:
+      - kubernetes
+      - master
 
   - name: install scheduler
     include: kubernetes/scheduler.yml
     when: kube_scheduler|default(false)|bool == true
+    tags:
+      - kubernetes
+      - master
 
   - name: install proxy
     include: kubernetes/proxy.yml
     when: kube_proxy|default(false)|bool == true
+    tags:
+      - kubernetes
+      - kubelet
 
   - name: install kubelet
     include: kubernetes/kubelet.yml
     when: kubelet|default(false)|bool == true
+    tags:
+      - kubernetes
+      - kubelet
 
   - name: install kubectl
     include: kubernetes/kubectl.yml
     when: kubectl|default(false)|bool == true
-
-
+    tags:
+      - kubernetes
+      - kubectl
 
 
