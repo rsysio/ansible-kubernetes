@@ -12,7 +12,7 @@
   - name: download flanneld
     local_action: "get_url url={{ flanneld_bin_url }} dest={{ flanneld_temp_dir }}/flanneld.tar.gz force=no"
     run_once: true
-    when: not flanneld_bin.stat.exists
+    when: not flanneld_bin.stat.exists and not flanneld_bin.skipped
 
   - name: unarchive
     local_action: "unarchive src={{ flanneld_temp_dir }}/flanneld.tar.gz dest={{ flanneld_temp_dir }}"
