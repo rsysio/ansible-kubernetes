@@ -16,6 +16,10 @@
   - name: get kubernetes
     include: kubernetes/get.yml
 
+  - name: install kubectl
+    include: kubernetes/kubectl.yml
+    when: kubectl|default(false)|bool == true
+
   - name: install kubernetes common files
     include: kubernetes/common.yml
     when: kubernetes|default(false)|bool == true
@@ -39,9 +43,5 @@
   - name: install scheduler
     include: kubernetes/scheduler.yml
     when: kube_scheduler|default(false)|bool == true
-
-  - name: install kubectl
-    include: kubernetes/kubectl.yml
-    when: kubectl|default(false)|bool == true
 
 
