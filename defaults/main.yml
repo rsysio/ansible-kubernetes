@@ -4,7 +4,7 @@
 docker_repo_key_server: "hkp://p80.pool.sks-keyservers.net:80"
 docker_repo_key: "58118E89F3A912897C070ADBF76221572C52609D"
 
-etcd_version: 3.0.14
+etcd_version: 3.1.3
 etcd_bin_url: "https://github.com/coreos/etcd/releases/download/v{{ etcd_version }}/etcd-v{{ etcd_version }}-linux-amd64.tar.gz"
 etcd_temp_dir: /tmp/etcd
 etcd_conf_dir: /etc/etcd
