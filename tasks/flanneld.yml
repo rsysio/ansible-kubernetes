@@ -6,7 +6,7 @@
 
   - name: download flanneld
     get_url: "url={{ flanneld_bin_url }} dest=/usr/bin/flanneld mode=0755 force=no"
-    when: not flanneld_bin.stat.exists and not flanneld_bin.skipped
+    when: not flanneld_bin.stat.exists
     become: true
 
   - name: create flanneld conf dir
