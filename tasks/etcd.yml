@@ -6,6 +6,7 @@
         path: /etc/etcd
         state: directory
         mode: 0755
+    become: true
 
   - name: copy flanneld network config
     template: src=flanneld/flannel-config.json.j2 dest=/etc/etcd/flannel-config.json
