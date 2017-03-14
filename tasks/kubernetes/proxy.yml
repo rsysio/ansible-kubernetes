@@ -1,7 +1,7 @@
 ---
 
   - name: copy kube-proxy
-    copy: "src={{ kubernetes_temp_dir }}/bin/kubernetes/server/bin/kube-proxy dest=/usr/bin/kube-proxy mode=755"
+    copy: "src={{ kubernetes_temp_dir }}/kubernetes/server/bin/kube-proxy dest=/usr/bin/kube-proxy mode=755"
     when: kube_proxy|default(false)|bool == true
     become: true
 
