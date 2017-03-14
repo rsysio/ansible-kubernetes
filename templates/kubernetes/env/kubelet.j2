@@ -10,14 +10,14 @@ KUBELET_ADDRESS="--address=127.0.0.1"
 # You may leave this blank to use the actual hostname
 # KUBELET_HOSTNAME="--hostname-override=localhost"
 
-{% macro etcd_hosts() -%}
+{% macro master_hosts() -%}
 {% set comma = joiner(",") -%}
 {% for host in groups.all -%}
-{%- if hostvars[host]['etcd']|default(false) == true -%}{{ comma() }}http://{{ host }}:8080{%- endif -%}
+{%- if hostvars[host]['kube_master']|default(false) == true -%}{{ comma() }}http://{{ host }}:8080{%- endif -%}
 {% endfor -%}
 {% endmacro -%}
 # location of the api-server
-KUBELET_API_SERVER="--api-servers={{ etcd_hosts() }}"
+KUBELET_API_SERVER="--api-servers={{ master_hosts() }}"
 
 # Add your own!
 KUBELET_ARGS=""

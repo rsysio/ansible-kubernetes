@@ -18,12 +18,12 @@ KUBE_LOG_LEVEL="--v=0"
 # Should this cluster be allowed to run privileged docker containers
 KUBE_ALLOW_PRIV="--allow-privileged=false"
 
-{% macro etcd_hosts() -%}
+{% macro master_hosts() -%}
 {% set comma = joiner(",") -%}
 {% for host in groups.all -%}
-{%- if hostvars[host]['etcd']|default(false) == true -%}{{ comma() }}http://{{ host }}:8080{%- endif -%}
+{%- if hostvars[host]['kube_master']|default(false) == true -%}{{ comma() }}http://{{ host }}:8080{%- endif -%}
 {% endfor -%}
 {% endmacro -%}
 
 # How the controller-manager, scheduler, and proxy find the apiserver
-KUBE_MASTER="--master={{ etcd_hosts() }}"
+KUBE_MASTER="--master={{ master_hosts() }}"
