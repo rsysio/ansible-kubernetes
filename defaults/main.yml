@@ -14,8 +14,11 @@ etcd_user: etcd
 etcd_pid: 2379
 
 kubernetes_version: 1.5.4
-kubernetes_bin_url: "https://storage.googleapis.com/kubernetes-release/release/v{{ kubernetes_version }}/kubernetes-server-linux-amd64.tar.gz"
-kubernetes_temp_dir: /tmp/kubernetes
+# https://storage.googleapis.com/kubernetes-release/release/v1.5.4/kubernetes-server-linux-amd64.tar.gz
+# https://storage.googleapis.com/kubernetes-release/release/v1.5.4/kubernetes-client-linux-amd64.tar.gz
+kubernetes_server_bin_url: "https://storage.googleapis.com/kubernetes-release/release/v{{ kubernetes_version }}/kubernetes-server-linux-amd64.tar.gz"
+kubernetes_client_bin_url: "https://storage.googleapis.com/kubernetes-release/release/v{{ kubernetes_version }}/kubernetes-client-linux-amd64.tar.gz"
+kubernetes_temp_dir: /tmp
 kubelet_data_dir: /var/lib/kubelet
 kubernetes_service_address: "10.30.0.0/16"
 kube_user: kube

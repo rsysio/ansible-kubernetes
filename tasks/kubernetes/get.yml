@@ -1,22 +1,10 @@
 ---
 
-  - name: create kubernetes install dir
-    local_action: "file path={{ kubernetes_temp_dir }} state=directory"
-    run_once: true
-
-  - name: download kubernetes
-    local_action: "get_url url={{ kubernetes_bin_url }} dest={{ kubernetes_temp_dir }}/kubernetes.tar.gz force=no"
+  - name: download kubernetes clients
+    local_action: "get_url url={{ kubernetes_client_bin_url }} dest={{ kubernetes_temp_dir }}/kubernetes.tar.gz force=no"
     run_once: true
 
   - name: untar kubernetes archive
     local_action: "unarchive src={{ kubernetes_temp_dir }}/kubernetes.tar.gz dest={{ kubernetes_temp_dir }}/ creates={{ kubernetes_temp_dir }}/kubernetes"
-    run_once: true
-
-  - name: create kubernetes bin dir
-    local_action: "file path={{ kubernetes_temp_dir }}/bin state=directory"
-    run_once: true
-
-  - name: untar kubernetes binaries
-    local_action: "unarchive src={{ kubernetes_temp_dir }}/kubernetes/server/kubernetes-server-linux-amd64.tar.gz dest={{ kubernetes_temp_dir }}/bin/ creates={{ kubernetes_temp_dir }}/bin/kubernetes"
     run_once: true
 
